@@ -47,10 +47,10 @@ public class GestorRecetas {
             System.out.println("0. Salir");
             System.out.print("Opcion: ");
 
-            if (sc.hasNextInt()) {
+            try {
                 opcion = sc.nextInt();
                 sc.nextLine();
-            } else {
+            } catch (Exception e) {
                 sc.nextLine();
                 opcion = -1;
             }
@@ -145,13 +145,15 @@ public class GestorRecetas {
 
     public static void buscarReceta(Scanner sc) {
         System.out.print("ID de la receta: ");
-        if (!sc.hasNextInt()) {
+        int id;
+        try {
+            id = sc.nextInt();
+            sc.nextLine();
+        } catch (Exception e) {
             sc.nextLine();
             System.out.println("ID no valido");
             return;
         }
-        int id = sc.nextInt();
-        sc.nextLine();
 
         try (RandomAccessFile fichero = new RandomAccessFile(RUTA_FICHERO + NOMBRE_FICHERO, "r")) {
             while (fichero.getFilePointer() < fichero.length()) {
@@ -170,22 +172,26 @@ public class GestorRecetas {
     // Modificar únicamente el tiempo de preparación
     public static void modificarTiempo(Scanner sc) {
         System.out.print("ID de la receta: ");
-        if (!sc.hasNextInt()) {
+        int id;
+        try {
+            id = sc.nextInt();
+            sc.nextLine();
+        } catch (Exception e) {
             sc.nextLine();
             System.out.println("ID no valido");
             return;
         }
-        int id = sc.nextInt();
-        sc.nextLine();
 
         System.out.print("Nuevo tiempo en minutos: ");
-        if (!sc.hasNextInt()) {
+        int nuevoTiempo;
+        try {
+            nuevoTiempo = sc.nextInt();
+            sc.nextLine();
+        } catch (Exception e) {
             sc.nextLine();
             System.out.println("Tiempo no valido.");
             return;
         }
-        int nuevoTiempo = sc.nextInt();
-        sc.nextLine();
 
         if (nuevoTiempo <= 0) {
             System.out.println("El tiempo debe ser mayor que 0");
@@ -213,13 +219,15 @@ public class GestorRecetas {
 
     public static void anadirReceta(Scanner sc) {
         System.out.print("ID de la nueva receta: ");
-        if (!sc.hasNextInt()) {
+        int id;
+        try {
+            id = sc.nextInt();
+            sc.nextLine();
+        } catch (Exception e) {
             sc.nextLine();
             System.out.println("ID no valido");
             return;
         }
-        int id = sc.nextInt();
-        sc.nextLine();
 
         if (id <= 0) {
             System.out.println("El ID debe ser mayor que 0");
@@ -243,15 +251,17 @@ public class GestorRecetas {
             String ingredientes = sc.nextLine();
             System.out.print("Tiempo de preparacion en minutos: ");
 
-            if (!sc.hasNextInt()) {
+            int tiempo;
+            try {
+                tiempo = sc.nextInt();
+                sc.nextLine();
+            } catch (Exception e) {
                 sc.nextLine();
                 System.out.println("Tiempo no valido");
                 return;
             }
-            int tiempo = sc.nextInt();
-            sc.nextLine();
 
-            if (nombre.isEmpty() || ingredientes.isEmpty() || nombre.length() > 30
+            if (nombre.length() == 0 || ingredientes.length() == 0 || nombre.length() > 30
                     || ingredientes.length() > 60 || tiempo <= 0) {
                 System.out.println("Datos no validos. Nombre máximo 30 caracteres, "
                         + "ingredientes maximo 60 y tiempo mayor que 0");
